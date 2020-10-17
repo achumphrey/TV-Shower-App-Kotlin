@@ -23,7 +23,7 @@ import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-open class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     lateinit var webServices: TVShowerWebServices
     lateinit var webClient: TVShowerClient

@@ -6,9 +6,9 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-open class TVShowerClient {
+class TVShowerClient {
 
- //   private val baseUrl = "https://api.tvmaze.com/"
+    private val baseUrl = "https://api.tvmaze.com/"
 
     val retrofitInstance: Retrofit
 
@@ -22,7 +22,7 @@ open class TVShowerClient {
 
 
             return   Retrofit.Builder()
-                .baseUrl("https://api.tvmaze.com/")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
