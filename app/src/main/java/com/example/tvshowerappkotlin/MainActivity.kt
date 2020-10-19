@@ -83,19 +83,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Display data
-    private fun displayData(data: TVShowerModel){
+    private fun displayData(data: TVShowerModel?){
 
         removeErrorMsgs()
 
         tvDays.text = getString(R.string.num_of_days)
 
-        tvName.text = data.name
+        tvName.text = data?.name
 
-        val date = calculateNumOfDays(data.premiered)
+        val date: String? = data?.let { calculateNumOfDays(data.premiered) }
         tvNumber.text = date
 
         Picasso.get()
-            .load(data.image.original)
+            .load(data?.image?.original)
+            .resize(400,500)
+            .error(R.drawable.ic_launcher_background)
             .into(imgView)
 
         drawViews()
@@ -130,14 +132,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Calculate number of days
-    private fun calculateNumOfDays(date: String) : String{
+    private fun calculateNumOfDays(date: String?) : String{
         val pattern = "yyyy-MM-dd"
         val sdf: DateFormat = SimpleDateFormat(pattern, Locale.UK)
-        val startDateValue: Date? = sdf.parse(date)
 
         val z: ZoneId = ZoneId.of("Europe/London")
         val today: LocalDate = LocalDate.now(z)
         val currentDateValue: Date? = sdf.parse("$today")
+
+        val startDateValue: Date? = date?.let { sdf.parse(date)} ?: currentDateValue
+
         val diff: Long = currentDateValue!!.time - (startDateValue!!.time)
         val numDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
 
